@@ -10,7 +10,7 @@ if (.Platform$OS.type == "unix") {
       register(bpstart(SnowParam(1)))
 } 
 
-#######################################pre-processing "Full scan" data, exoprt MS1 features#######################################
+#######################################pre-processing "Full scan" data, export MS1 features#######################################
 MSdata <- paste0("fullscan/",list.files(path = "fullscan/",pattern = ".mzXML$", recursive = TRUE))
 pd <- data.frame(sample_name = sub(basename(MSdata), 
                                    pattern = ".mzXML",
@@ -90,7 +90,7 @@ dataTable <- dataTable[, !(names(dataTable) %in% c("peakidx"))]
 head(dataTable)
 write.table(dataTable, "xcms_all_DIA_MS1_features.txt", sep = "\t", quote = FALSE, row.names = FALSE)
 
-#########################pre-processing "DDA" data, exoprt MS1&MS2 features, MS2 features as MS/MS spectral library#########################
+#########################pre-processing "DDA" data, export MS1&MS2 features, MS2 features as MS/MS spectral library#########################
 MSdata <- paste0("DDA",list.files(path = "DDA",pattern = ".mzXML$", recursive = TRUE))
 pd <- data.frame(sample_name = sub(basename(MSdata), 
                                    pattern = ".mzXML",
@@ -123,7 +123,7 @@ source("https://raw.githubusercontent.com/jorainer/xcms-gnps-tools/master/custom
 filteredMs2Spectra <- featureSpectra(processed_Data, return.type = c("MSpectra","list"))
 filteredMs2Spectra <- clean(filteredMs2Spectra, all = TRUE)
 filteredMs2Spectra <- formatSpectraForGNPS(filteredMs2Spectra)
-writeMgfData(filteredMs2Spectra, "DDA_ms2spectra_library.mgf")
+writeMgfData(filteredMs2Spectra, "DDA_ms2spectral_library.mgf")
 processedData <- adjustRtime(processedData, param = pgp_subs)
 pdp <- PeakDensityParam(sampleGroups = processedData$sample_group,
                         minFraction = 1, binSize = 0.02)
